@@ -1,52 +1,45 @@
 import tkinter as tk
-from tkinter import messagebox
 
 def add():
-    try:
-        result.set(float(num1.get()) + float(num2.get()))
-    except:
-        messagebox.showerror("Error", "Invalid input")
+    result = float(entry1.get()) + float(entry2.get())
+    result_label.config(text="Result: " + str(result))
 
 def subtract():
-    try:
-        result.set(float(num1.get()) - float(num2.get()))
-    except:
-        messagebox.showerror("Error", "Invalid input")
+    result = float(entry1.get()) - float(entry2.get())
+    result_label.config(text="Result: " + str(result))
 
 def multiply():
-    try:
-        result.set(float(num1.get()) * float(num2.get()))
-    except:
-        messagebox.showerror("Error", "Invalid input")
+    result = float(entry1.get()) * float(entry2.get())
+    result_label.config(text="Result: " + str(result))
 
 def divide():
-    try:
-        if float(num2.get()) == 0:
-            messagebox.showerror("Error", "Division by zero")
-        else:
-            result.set(float(num1.get()) / float(num2.get()))
-    except:
-        messagebox.showerror("Error", "Invalid input")
+    num2 = float(entry2.get())
+    if num2 != 0:
+        result = float(entry1.get()) / num2
+        result_label.config(text="Result: " + str(result))
+    else:
+        result_label.config(text="Cannot divide by zero")
 
-# GUI setup
+# GUI window
 root = tk.Tk()
-root.title("Simple Tkinter Calculator")
+root.title("Simple Calculator")
 
-tk.Label(root, text="Number 1").grid(row=0, column=0)
-tk.Label(root, text="Number 2").grid(row=1, column=0)
-tk.Label(root, text="Result").grid(row=2, column=0)
+# Input fields
+entry1 = tk.Entry(root, width=10)
+entry1.grid(row=0, column=0, padx=5, pady=5)
 
-num1 = tk.StringVar()
-num2 = tk.StringVar()
-result = tk.StringVar()
+entry2 = tk.Entry(root, width=10)
+entry2.grid(row=0, column=1, padx=5, pady=5)
 
-tk.Entry(root, textvariable=num1).grid(row=0, column=1)
-tk.Entry(root, textvariable=num2).grid(row=1, column=1)
-tk.Entry(root, textvariable=result, state='readonly').grid(row=2, column=1)
+# Buttons
+tk.Button(root, text="+", width=5, command=add).grid(row=1, column=0, padx=5, pady=5)
+tk.Button(root, text="-", width=5, command=subtract).grid(row=1, column=1, padx=5, pady=5)
+tk.Button(root, text="*", width=5, command=multiply).grid(row=2, column=0, padx=5, pady=5)
+tk.Button(root, text="/", width=5, command=divide).grid(row=2, column=1, padx=5, pady=5)
 
-tk.Button(root, text="+", command=add).grid(row=3, column=0)
-tk.Button(root, text="-", command=subtract).grid(row=3, column=1)
-tk.Button(root, text="×", command=multiply).grid(row=4, column=0)
-tk.Button(root, text="÷", command=divide).grid(row=4, column=1)
+# Result
+result_label = tk.Label(root, text="Result:")
+result_label.grid(row=3, column=0, columnspan=2, pady=10)
 
+# Run the app
 root.mainloop()
